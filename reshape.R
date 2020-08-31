@@ -4,7 +4,7 @@
 library(tidyverse)
 
 qa <- read_csv(file = "data/results.csv")
-cols <- names(qa)[-c(1:2)]
+cols <- names(qa)[-c(1)]
 qal <- qa %>% 
   dplyr::select(-Timestamp) %>% 
   tidyr::pivot_longer(
