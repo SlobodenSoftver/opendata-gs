@@ -24,6 +24,7 @@ suppressPackageStartupMessages({
 })
 
 source("graph.R")
+source("banner.R")
 ```
 
 
