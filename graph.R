@@ -46,3 +46,9 @@ bar_graph <- function(data_, question_, top_ = NULL) {
     coord_flip() +
     theme(legend.position = "none")
 }
+
+build_table <- function(data_, question_){
+    table_data <- data_ %>% 
+      filter(question == question_, answer != "NA")
+    knitr::kable(table_data[, 3:3])
+}
