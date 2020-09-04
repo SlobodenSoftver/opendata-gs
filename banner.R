@@ -28,7 +28,7 @@ make_info_plot <- function(plot_data,
                            plot_type = c("bar", "pie"),
                            box_fill = "steelblue",
                            text_color = "white",
-                           wrap_length = 50) {
+                           wrap_length = 30) {
   
   if (is.numeric(plot_question)) {
     to_plot <- plot_data %>% 
@@ -84,7 +84,7 @@ make_info_box <-
            message,
            text_color = "white",
            text_size = 15,
-           wrap_length = 20) {
+           wrap_length = 30) {
     df <- data.frame(x = 1:10, y = 1:10)
     ggplot(data = df, aes(x = x, y = y)) +
       #scale_x_continuous(limits = c(0, box_width  + box_height * 0.1)) +
@@ -116,15 +116,19 @@ gg_banner <-
            banner_question,
            banner_title,
            banner_message = "Само 11% се солидно запознаени со концептот на отворени податоци",
+           banner_message_font_size  = 12,
+           banner_message_font_color  = "white",
            plot_title = "Колку сте запознаени со концептот на отворени податоци",
            top_n_answers = NULL,
+           wrap_length = 30,
            message_right = FALSE) {
     
     Info <- make_info_box(
       message = banner_message,
-      text_size = 6,
       box_width = 5,
-      box_height = 4
+      box_height = 4,
+      text_color = banner_message_font_color,
+      text_size = banner_message_font_size
     )
     
     Graph <- make_info_plot(
@@ -139,13 +143,15 @@ gg_banner <-
     
     patchwork <- Info + Graph
     patchwork + plot_annotation(
-      title = banner_title,
-      caption = "Отворени Податоци | Слободен Софтвер Македонија"
+      title = stringr::str_wrap(banner_title, 100),
+      caption = "Отворени податоци | Слободен софтвер Македонија"
     ) +
       theme(plot.background = element_rect(fill="steelblue"))
     
   }
 
 # gg_banner(banner_question = "Во кој град е регистрирана вашата организација?",
-#           banner_title = "Отворени податоци и граѓанскиот сектор во република Северна Македонија",
-#           banner_data =  qal  )
+#           banner_title = "Отворени податоци и граѓанскиот сектор во република Северна Македонија", 
+#           top_n_answers = 5,
+#           banner_message_font_size = 4.5,
+#           banner_data =  qal)
