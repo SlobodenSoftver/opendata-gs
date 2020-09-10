@@ -146,8 +146,13 @@ gg_banner(
   banner_title = "Отворени податоци и граѓанскиот сектор во Република Северна Македонија",
   plot_title = "Во кој град е регистрирана вашата организација?",
   top_n_answers = 5,
+<<<<<<< HEAD
   banner_message_font_size = 6,
   banner_message_font_color = "white",
+=======
+  banner_message_font_size = 4.5,
+  banner_message_font_color = "black",
+>>>>>>> 88bdfd01fa90bcedaecc013b9693ffcbea4fd7e0
   wrap_length = 30
 )
 ```
