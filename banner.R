@@ -108,7 +108,8 @@ make_info_box <-
       ) +
       theme_void() +
       theme(panel.background = element_rect(fill = box_fill, color = box_fill)) +
-      theme(plot.background = element_rect(fill = box_fill, color = box_fill))
+      theme(plot.background = element_rect(fill = box_fill, color = box_fill)) +
+      cowplot::draw_image("photos/banner-photo.png")
   }
 
 gg_banner <-
