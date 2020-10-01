@@ -2,25 +2,6 @@ library(ggplot2)
 library(patchwork)
 library(stringr)
 
-# my_data <-
-#   data.frame(
-#     Q = c(
-#       "Не сум запознаен",
-#       "Делумно сум запознаен",
-#       "Солидно сум запознаен"
-#     ),
-#     P = c(64, 25, 11)
-#   )
-# 
-# my_data$Q <- factor(
-#   my_data$Q,
-#   levels = c(
-#     "Не сум запознаен",
-#     "Делумно сум запознаен",
-#     "Солидно сум запознаен"
-#   )
-# )
-
 make_info_plot <- function(plot_data,
                            plot_question,
                            top_n_answers = NULL,
@@ -150,9 +131,3 @@ gg_banner <-
       theme(plot.background = element_rect(fill="steelblue"))
     
   }
-
-# gg_banner(banner_question = "Во кој град е регистрирана вашата организација?",
-#           banner_title = "Отворени податоци и граѓанскиот сектор во република Северна Македонија", 
-#           top_n_answers = 5,
-#           banner_message_font_size = 4.5,
-#           banner_data =  qal)
