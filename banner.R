@@ -50,7 +50,7 @@ make_info_plot <- function(plot_data,
     theme(axis.text = element_text(color = text_color)) +
     theme(axis.line = element_line(color = text_color)) +
     theme(axis.ticks = element_line(color = text_color)) +
-    theme(legend.position = "bottom") +
+    theme(legend.position = "top") +
     theme(legend.text = element_text(color = text_color))
   
   if (plot_type == "pie") {
