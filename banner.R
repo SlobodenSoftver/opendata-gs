@@ -2,34 +2,14 @@ library(ggplot2)
 library(patchwork)
 library(stringr)
 
-# my_data <-
-#   data.frame(
-#     Q = c(
-#       "Не сум запознаен",
-#       "Делумно сум запознаен",
-#       "Солидно сум запознаен"
-#     ),
-#     P = c(64, 25, 11)
-#   )
-# 
-# my_data$Q <- factor(
-#   my_data$Q,
-#   levels = c(
-#     "Не сум запознаен",
-#     "Делумно сум запознаен",
-#     "Солидно сум запознаен"
-#   )
-# )
-
 make_info_plot <- function(plot_data,
                            plot_question,
                            top_n_answers = NULL,
                            plot_title,
                            plot_type = c("bar", "pie"),
-                           box_fill = "steelblue",
+                           box_fill = "#B270A9",
                            text_color = "white",
-                           wrap_length = 30) {
-  
+                           wrap_length = 50) {
   if (is.numeric(plot_question)) {
     to_plot <- plot_data %>% 
       filter(question_number == plot_question)
@@ -41,7 +21,8 @@ make_info_plot <- function(plot_data,
   tallied <- to_plot %>% 
     group_by(answer) %>% 
     tally() %>% 
-    arrange(desc(n)) 
+    arrange(desc(n)) %>% 
+    mutate(answer = stringr::str_wrap(answer,15))
   
   if (!is.null(top_n_answers)) {
     tallied <- tallied %>% 
@@ -53,10 +34,11 @@ make_info_plot <- function(plot_data,
     aes(x = answer,
         y = n,
         fill = answer) +
-    geom_col() +
-    # geom_text(aes(label = !!sym(py)), 
+    geom_col(color = "gray") +
+    # geom_text(aes(label = n),
     #           position = position_stack(vjust = .9)) +
     #scale_y_continuous(labels = scales::label_number(suffix = "%")) +
+    ggplot2::scale_fill_viridis_d(option = "A") +
     labs(title = stringr::str_wrap(plot_title, wrap_length)) +
     labs(x = "", y = "", fill = "") +
     theme_classic() +
@@ -80,7 +62,7 @@ make_info_plot <- function(plot_data,
 make_info_box <-
   function(box_width = 5,
            box_height = 5,
-           box_fill = "steelblue",
+           box_fill = "#B270A9",
            message,
            text_color = "white",
            text_size = 15,
@@ -89,7 +71,7 @@ make_info_box <-
     ggplot(data = df, aes(x = x, y = y)) +
       #scale_x_continuous(limits = c(0, box_width  + box_height * 0.1)) +
       #scale_y_continuous(limits = c(0, box_height + box_height * 0.1)) +
-      coord_fixed() +
+      # coord_fixed() +
       annotate(
         geom = "rect",
         xmin = 0,
@@ -108,8 +90,7 @@ make_info_box <-
       ) +
       theme_void() +
       theme(panel.background = element_rect(fill = box_fill, color = box_fill)) +
-      theme(plot.background = element_rect(fill = box_fill, color = box_fill)) +
-      cowplot::draw_image("photos/banner-photo.png")
+      theme(plot.background = element_rect(fill = box_fill, color = box_fill)) 
   }
 
 gg_banner <-
@@ -117,10 +98,10 @@ gg_banner <-
            banner_question,
            banner_title,
            banner_message = "Само 11% се солидно запознаени со концептот на отворени податоци",
-           banner_message_font_size  = 12,
-           banner_message_font_color  = "white",
            plot_title = "Колку сте запознаени со концептот на отворени податоци",
            top_n_answers = NULL,
+           banner_message_font_size  = 12,
+           banner_message_font_color  = "white",
            wrap_length = 30,
            message_right = FALSE) {
     
@@ -138,21 +119,30 @@ gg_banner <-
       plot_title = plot_title,
       plot_type = "bar",
       top_n_answers = top_n_answers,
-      box_fill = "steelblue",
+      box_fill = "#B270A9",
       text_color = "white"
     )
     
-    patchwork <- Info + Graph
-    patchwork + plot_annotation(
+    Logo <- ggplot2::ggplot() + geom_blank() +
+      cowplot::draw_image("photos/banner-photo.png") +
+      theme(panel.background = element_rect(fill = "#B270A9", color = "#B270A9")) +
+      theme(plot.background = element_rect(fill = "#B270A9", color = "#B270A9")) +
+      theme(legend.background = element_rect(fill = "#B270A9", color = "#B270A9"))
+    
+    layout <- "
+    AACC
+    AACC
+    AACC
+    BBCC
+    "
+    
+    #these make the same arrangement... 
+    # collage <- Info + Logo + Graph + plot_layout(design = layout)
+    collage <- ((Info / Logo) + plot_layout(heights = c(0.7, 0.3)) | Graph)
+    
+    collage + plot_annotation(
       title = stringr::str_wrap(banner_title, 100),
       caption = "Отворени податоци | Слободен софтвер Македонија"
     ) +
-      theme(plot.background = element_rect(fill="steelblue"))
-    
+      theme(plot.background = element_rect(fill="#B270A9"))
   }
-
-# gg_banner(banner_question = "Во кој град е регистрирана вашата организација?",
-#           banner_title = "Отворени податоци и граѓанскиот сектор во република Северна Македонија", 
-#           top_n_answers = 5,
-#           banner_message_font_size = 4.5,
-#           banner_data =  qal)
