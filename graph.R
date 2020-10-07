@@ -50,5 +50,5 @@ bar_graph <- function(data_, question_, top_ = NULL) {
 build_table <- function(data_, question_){
     table_data <- data_ %>% 
       filter(question == question_, answer != "NA")
-    knitr::kable(table_data[, 3:3])
+    knitr::kable(table_data[, 3:3], col.names = c("Одговор"))
 }
