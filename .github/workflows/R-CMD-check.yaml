@@ -1,0 +1,40 @@
+# For help debugging build failures open an issue on the RStudio community with the 'github-actions' tag.
+# https://community.rstudio.com/new-topic?category=Package%20development&tags=github-actions
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+
+name: R-CMD-check
+
+jobs:
+  R-CMD-check:
+    runs-on: macOS-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: r-lib/actions/setup-r@v1
+      - uses: r-lib/actions/setup-pandoc@v1 
+      - name: Install dependencies
+        run: |
+          R -e "install.packages('rmarkdown',repos='http://cran.rstudio.com')"
+          R -e "install.packages('tidyverse')"
+          R -e "install.packages('devtools')"
+          R -e "devtools::install_github('thomasp85/patchwork')"
+          R -e "install.packages('cowplot')"
+      - name: Build File
+        run: |
+          Rscript -e "rmarkdown::render('opendata_gs.Rmd', encoding="UTF_8")"
+          mkdir build
+          mv opendata_gs.html build/index.html         
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@3.6.2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: build # The folder the action should deploy.
+          CLEAN: true # Automatically remove deleted files from the deploy branch
