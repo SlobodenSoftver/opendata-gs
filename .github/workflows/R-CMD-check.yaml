@@ -40,3 +40,10 @@ jobs:
           BRANCH: gh-pages # The branch the action should deploy to.
           FOLDER: build # The folder the action should deploy.
           CLEAN: true # Automatically remove deleted files from the deploy branch
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: code-coverage-report
+          path: build
+    
