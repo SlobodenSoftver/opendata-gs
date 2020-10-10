@@ -27,6 +27,7 @@ jobs:
           R -e "install.packages('devtools')"
           R -e "devtools::install_github('thomasp85/patchwork')"
           R -e "install.packages('cowplot')"
+          R -e "install.packages('magick')"
       - name: Build File
         run: |
           Rscript -e "rmarkdown::render('opendata_gs.Rmd', encoding="UTF_8")"
@@ -44,6 +45,6 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: code-coverage-report
+          name: opendata-gs-build
           path: build
     
