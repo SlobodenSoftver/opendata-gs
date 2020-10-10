@@ -33,7 +33,6 @@ jobs:
           Rscript -e "rmarkdown::render('opendata_gs.Rmd', encoding="UTF_8")"
           mkdir build
           mv opendata_gs.html build/index.html   
-          mv photos build/photos      
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@3.6.2
         with:
