@@ -21,16 +21,18 @@ jobs:
       - uses: r-lib/actions/setup-pandoc@v1 
       - name: Install dependencies
         run: |
+          brew update && brew install imagemagick
           R -e "install.packages('rmarkdown',repos='http://cran.rstudio.com')"
           R -e "install.packages('tidyverse')"
           R -e "install.packages('devtools')"
           R -e "devtools::install_github('thomasp85/patchwork')"
           R -e "install.packages('cowplot')"
+          R -e "install.packages('magick')"
       - name: Build File
         run: |
           Rscript -e "rmarkdown::render('opendata_gs.Rmd', encoding="UTF_8")"
           mkdir build
-          mv opendata_gs.html build/index.html         
+          mv opendata_gs.html build/index.html
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@3.6.2
         with:
@@ -38,3 +40,10 @@ jobs:
           BRANCH: gh-pages # The branch the action should deploy to.
           FOLDER: build # The folder the action should deploy.
           CLEAN: true # Automatically remove deleted files from the deploy branch
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: opendata-gs-build
+          path: build
+    
