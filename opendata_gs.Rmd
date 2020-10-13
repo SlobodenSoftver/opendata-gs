@@ -5,10 +5,13 @@ author:
   - Игор Добросављевиќ^[dobrosavljevich@gmail.com]
 date: "8/2020"
 output: 
-  html_document:
+#  html_document:
+#    toc: true
+#    toc_depth: 2
+#    toc_float: true
+  pagedown::html_paged: 
     toc: true
-    toc_depth: 2
-    toc_float: true
+    number_sections: false
 ---
 
 ```{r setup, include=FALSE}
