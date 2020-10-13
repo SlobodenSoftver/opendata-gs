@@ -28,7 +28,8 @@ jobs:
           R -e "devtools::install_github('thomasp85/patchwork')"
           R -e "install.packages('cowplot')"
           R -e "install.packages('magick')"
-      - name: Build File
+	  R -e "devtools::install_github('rstudio/pagedown')" 
+     - name: Build File
         run: |
           Rscript -e "rmarkdown::render('opendata_gs.Rmd', encoding="UTF_8")"
           mkdir build
