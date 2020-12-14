@@ -42,7 +42,7 @@ meta() %>%
   meta_social(
     title = "“Отворени податоци и граѓанскиот сектор во Северна Република Македонија”",
     url = "https://slobodensoftver.github.io/opendata-gs/",
-    image = "https://github.com/SlobodenSoftver/opendata-gs/blob/master/photos/banner-photo.png?raw=true",
+    image = "https://github.com/SlobodenSoftver/opendata-gs/blob/master/photos/banner-photo-ogp.png?raw=true",
     og_type = "article",
     og_author = c("Маријана Јанческа", "Игор Добросављевиќ"),
     twitter_card_type = "summary",
