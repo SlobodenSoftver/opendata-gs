@@ -28,7 +28,7 @@ jobs:
           R -e "devtools::install_github('thomasp85/patchwork')"
           R -e "install.packages('cowplot')"
           R -e "install.packages('magick')"
-          R -e "install.packages("metathis")"
+          R -e "install.packages('metathis')"
           R -e "devtools::install_github('rstudio/pagedown')"  
       - name: Build File
         run: |
